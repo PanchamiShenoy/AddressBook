@@ -13,7 +13,7 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
 		int choice = 0;
-		while (choice != 4) {
+		while (choice != 5) {
 
 			System.out.println("1 : Add Contact\n2 : Edit Contact\n3 : Dispplay \n 4: to exit");
 
@@ -24,14 +24,28 @@ public class AddressBookMain {
 				addContact();
 				break;
 			case 2:
-				editPerson();
+				editContact();
 				break;
 			case 3:
 				displayContact();
 				break;
+			case 4:
+				deleteContact();
+				break;
 
 			}
 		}
+	}
+
+	private static void deleteContact() {
+		System.out.println("enter the first name");
+		sc.nextLine();
+		String firstName = sc.nextLine();
+		System.out.println("enter the last name");
+		String lastName = sc.nextLine();
+		Contacts person = getPerson(firstName, lastName);
+		contactList.remove(person);
+		
 	}
 
 	private static void displayContact() {
@@ -78,7 +92,7 @@ public class AddressBookMain {
 
 	}
 
-	public static void editPerson() {
+	public static void editContact() {
 
 		System.out.println("enter the first name");
 		sc.nextLine();
