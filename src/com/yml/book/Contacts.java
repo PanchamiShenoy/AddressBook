@@ -1,7 +1,7 @@
 package com.yml.book;
 
 public class Contacts {
-	private String firstName, lastName, address, city, state, zip, phoneNumber, email;
+	public String firstName, lastName, address, city, state, zip, phoneNumber, email;
 
 	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
