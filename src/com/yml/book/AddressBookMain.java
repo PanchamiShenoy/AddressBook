@@ -79,10 +79,15 @@ public class AddressBookMain {
 	 * method to display contacts in addressBook
 	 */
 	private static void displayContact(Contacts c) {
-		for (Contacts contact : c.contactList) {
-			contact.display();
+		if (c.contactList.size() == 0) {
+			System.out.println("addressBook is empty");
+		}else {
+			for (Contacts contact : c.contactList) {
+					contact.display();
 
+			}	
 		}
+		
 
 	}
 
