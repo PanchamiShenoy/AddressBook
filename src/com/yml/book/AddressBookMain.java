@@ -1,62 +1,95 @@
 package com.yml.book;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
 
 public class AddressBookMain {
 
-	public static List<Contacts> contactList = new ArrayList<>();
-
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
-		int choice = 0;
-		while (choice != 5) {
+		Hashtable<String, Contacts> multipleAddressBook = new Hashtable<String, Contacts>();
+		Contacts c = new Contacts();
 
-			System.out.println("1 : Add Contact\n2 : Edit Contact\n3 : Dispplay \n 4: to exit");
+		String n = "";
+		String k = "AddressBook1";
+		multipleAddressBook.put(k, c);
+		int counter = sc.nextInt();
+		while (counter != 1) {
+			System.out.println(
+					"Enter your choice\n1.add contact\n2.edit contact\n3.Display AddressBook\n4.Delete contact\n5.Create another address book\n6.exit");
+			int choice = sc.nextInt();
+			if (choice == 5) {
+				System.out.println("Enter the name of the addressbook");
+				n = sc.next();
+				Contacts c1 = new Contacts();
+				multipleAddressBook.put(n, c1);
 
-			choice = sc.nextInt();
-
-			switch (choice) {
-			case 1:
-				addContact();
-				break;
-			case 2:
-				editContact();
-				break;
-			case 3:
-				displayContact();
-				break;
-			case 4:
-				deleteContact();
-				break;
-
+			} else if (choice == 6)
+				counter = 1;
+			else {
+				System.out.println("Enter the addressbook where you want to insert or modify the  contact!!");
+				n = sc.next();
+				choice(choice, multipleAddressBook.get(n));
 			}
+
 		}
 	}
 
-	private static void deleteContact() {
+	/*
+	 * method to perform various opertaion based on choice
+	 */
+	public static void choice(int choice, Contacts c) {
+
+		switch (choice) {
+		case 1:
+			addContact(c);
+			break;
+		case 2:
+			editContact(c);
+			break;
+		case 3:
+			displayContact(c);
+			break;
+		case 4:
+			deleteContact(c);
+			break;
+
+		}
+	}
+
+	/*
+	 * method to delete contact from addressBook
+	 */
+	private static void deleteContact(Contacts c) {
 		System.out.println("enter the first name");
 		sc.nextLine();
 		String firstName = sc.nextLine();
 		System.out.println("enter the last name");
 		String lastName = sc.nextLine();
-		Contacts person = getPerson(firstName, lastName);
-		contactList.remove(person);
-		
+		Contacts person = getPerson(firstName, lastName, c);
+		c.contactList.remove(person);
+
 	}
 
-	private static void displayContact() {
-		for (Contacts contact : contactList) {
+	/*
+	 * method to display contacts in addressBook
+	 */
+	private static void displayContact(Contacts c) {
+		for (Contacts contact : c.contactList) {
 			contact.display();
 
 		}
 
 	}
 
-	public static void addContact() {
+	/*
+	 * method to add contact into addressBook
+	 */
+	public static void addContact(Contacts c) {
 		System.out.println("enter the first name");
 		sc.nextLine();
 		String firstName = sc.nextLine();
@@ -74,15 +107,16 @@ public class AddressBookMain {
 		String phoneNumber = sc.nextLine();
 		System.out.println("enter the email");
 		String email = sc.nextLine();
-
-		Contacts c = new Contacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
-
-		contactList.add(c);
+		Contacts c1 = new Contacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
+		c.contactList.add(c1);
 
 	}
 
-	public static Contacts getPerson(String firstName, String lastName) {
-		for (Contacts contact : contactList) {
+	/*
+	 * method to get contact
+	 */
+	public static Contacts getPerson(String firstName, String lastName, Contacts c) {
+		for (Contacts contact : c.contactList) {
 			if (contact.firstName.equals(firstName) && contact.lastName.equals(lastName)) {
 				return contact;
 			}
@@ -92,7 +126,10 @@ public class AddressBookMain {
 
 	}
 
-	public static void editContact() {
+	/*
+	 * method to modify contact
+	 */
+	public static void editContact(Contacts c) {
 
 		System.out.println("enter the first name");
 		sc.nextLine();
@@ -100,7 +137,7 @@ public class AddressBookMain {
 		System.out.println("enter the last name");
 		String lastName = sc.nextLine();
 		System.out.println("hi");
-		Contacts person = getPerson(firstName, lastName);
+		Contacts person = getPerson(firstName, lastName, c);
 
 		int choice = 0;
 		while (choice != 9) {

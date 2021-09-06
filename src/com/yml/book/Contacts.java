@@ -1,7 +1,16 @@
 package com.yml.book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Contacts {
+	
 	public String firstName, lastName, address, city, state, zip, phoneNumber, email;
+	List<Contacts> contactList = new ArrayList<>();
+
+	Contacts() {
+
+	}
 
 	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
