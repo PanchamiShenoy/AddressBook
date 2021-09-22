@@ -1,6 +1,7 @@
 package com.yml.book;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
@@ -11,13 +12,13 @@ public class AddressBookMain {
 
 	public static void main(String[] args) {
 		System.out.println("welcome to address book program");
-		Hashtable<String, Contacts> multipleAddressBook = new Hashtable<String, Contacts>();
+		HashMap<String, Contacts> multipleAddressBook = new HashMap<String, Contacts>();
 		Contacts c = new Contacts();
 
 		String n = "";
 		String k = "AddressBook1";
 		multipleAddressBook.put(k, c);
-		int counter = sc.nextInt();
+		int counter = 2;
 		while (counter != 1) {
 			System.out.println(
 					"Enter your choice\n1.add contact\n2.edit contact\n3.Display AddressBook\n4.Delete contact\n5.Create another address book\n6.exit");
@@ -25,6 +26,7 @@ public class AddressBookMain {
 			if (choice == 5) {
 				System.out.println("Enter the name of the addressbook");
 				n = sc.next();
+
 				Contacts c1 = new Contacts();
 				multipleAddressBook.put(n, c1);
 
@@ -81,13 +83,12 @@ public class AddressBookMain {
 	private static void displayContact(Contacts c) {
 		if (c.contactList.size() == 0) {
 			System.out.println("addressBook is empty");
-		}else {
+		} else {
 			for (Contacts contact : c.contactList) {
-					contact.display();
+				contact.display();
 
-			}	
+			}
 		}
-		
 
 	}
 
@@ -112,6 +113,7 @@ public class AddressBookMain {
 		String phoneNumber = sc.nextLine();
 		System.out.println("enter the email");
 		String email = sc.nextLine();
+		
 		Contacts c1 = new Contacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
 		c.contactList.add(c1);
 
