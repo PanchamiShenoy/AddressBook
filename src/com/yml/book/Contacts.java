@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts {
-	
+
 	public String firstName, lastName, address, city, state, zip, phoneNumber, email;
 	List<Contacts> contactList = new ArrayList<>();
 
