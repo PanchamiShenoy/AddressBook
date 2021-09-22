@@ -81,13 +81,12 @@ public class AddressBookMain {
 	private static void displayContact(Contacts c) {
 		if (c.contactList.size() == 0) {
 			System.out.println("addressBook is empty");
-		}else {
+		} else {
 			for (Contacts contact : c.contactList) {
-					contact.display();
+				contact.display();
 
-			}	
+			}
 		}
-		
 
 	}
 
@@ -112,6 +111,14 @@ public class AddressBookMain {
 		String phoneNumber = sc.nextLine();
 		System.out.println("enter the email");
 		String email = sc.nextLine();
+		for (int j = 0; j < c.contactList.size(); j++) {
+			Contacts object = c.contactList.get(j);
+			if (object.firstName.equals(firstName) && object.lastName.equals(lastName)) {
+				System.out.println("Contact already exists!!Please enter a different contact name");
+				return;
+			}
+		}
+
 		Contacts c1 = new Contacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
 		c.contactList.add(c1);
 
