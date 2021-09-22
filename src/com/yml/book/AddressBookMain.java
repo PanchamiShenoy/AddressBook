@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class AddressBookMain {
 
@@ -20,7 +21,7 @@ public class AddressBookMain {
 		int counter = sc.nextInt();
 		while (counter != 1) {
 			System.out.println(
-					"Enter your choice\n1.add contact\n2.edit contact\n3.Display AddressBook\n4.Delete contact\n5.Create another address book\n6.exit");
+					"Enter your choice\n1.add contact\n2.edit contact\n3.Display AddressBook\n4.Delete contact\n5.Create another address book\n6.search\7.exit");
 			int choice = sc.nextInt();
 			if (choice == 5) {
 				System.out.println("Enter the name of the addressbook");
@@ -28,9 +29,13 @@ public class AddressBookMain {
 				Contacts c1 = new Contacts();
 				multipleAddressBook.put(n, c1);
 
-			} else if (choice == 6)
+			} else if (choice == 6) {
+				System.out.println("Enter the city or state");
+				String city = sc.next();
+				AddressBookMain.search(city, multipleAddressBook);
+			} else if (choice == 7) {
 				counter = 1;
-			else {
+			} else {
 				System.out.println("Enter the addressbook where you want to insert or modify the  contact!!");
 				n = sc.next();
 				choice(choice, multipleAddressBook.get(n));
@@ -136,6 +141,25 @@ public class AddressBookMain {
 		}
 		return null;
 
+	}
+
+	/*
+	 * method to search contact from multiple addressbook
+	 */
+	public static void search(String place, Hashtable m) {
+
+		Set<String> setOfKeys = m.keySet();
+
+		for (String key : setOfKeys) {
+			Contacts object = (Contacts) m.get(key);
+			for (int j = 0; j < object.contactList.size(); j++) {
+				Contacts c = object.contactList.get(j);
+				if (c.city.equals(place) || c.state.equals(place)) {
+					System.out.println(c.firstName + " " + c.lastName + " is from " + c.city + " " + c.state);
+
+				}
+			}
+		}
 	}
 
 	/*
