@@ -14,15 +14,14 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		System.out.println("Welcome to AddressBook program");
 
-		final int EXIT = 6;
+		final int EXIT = 7;
 
 		int choice = 0;
 
 		while (choice != EXIT) {
 
 			System.out.println(
-					"1 : Add AddressBook\n2 : Add Contact\n3 : Edit Contact\n4 : Delete Contact\n5 : Display Contact\n"
-							+ EXIT + " : to exit");
+					"1 : Add AddressBook\n2 : Add Contact\n3 : Edit Contact\n4 : Delete Contact\n5 : Display Contact\n6.Search\n7."+ EXIT + " : to exit");
 			Scanner r = new Scanner(System.in);
 			Scanner sc = new Scanner(System.in);
 			choice = r.nextInt();
@@ -45,12 +44,22 @@ public class AddressBookMain {
 			case 5:
 				displayContact();
 				break;
-
+			case 6:
+				search();
 			case EXIT:
 				System.exit(0);
 
 			}
 
+		}
+
+	}
+	private static void search() {
+		System.out.println("Enter the city or state name");
+		String place = r.nextLine();
+		for (Map.Entry<String, AddressBook> entry : addressBook.entrySet()) {
+			AddressBook obj = entry.getValue();
+			obj.search(place);
 		}
 
 	}

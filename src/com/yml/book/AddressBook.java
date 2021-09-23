@@ -1,25 +1,51 @@
 package com.yml.book;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class AddressBook {
 	String addressBookName;
 	static Scanner sc = new Scanner(System.in);
+	static Map<String, Contact> addressBook;
 
 	AddressBook(String addressBookName) {
 		this.addressBookName = addressBookName;
+		this.addressBook = new HashMap<>();
 	}
 
-	/**
-	 * Map to maintain dictionary name and contact
-	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressBookName);
+	}
 
-	static Map<String, Contact> addressBook = new HashMap<>();
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AddressBook other = (AddressBook) obj;
+		return Objects.equals(addressBookName, other.addressBookName);
+	}
+
+	public String getAddressBookName() {
+		return addressBookName;
+	}
+
+	public void setAddressBookName(String addressBookName) {
+		this.addressBookName = addressBookName;
+	}
 
 	/*
 	 * method to add contact
@@ -47,10 +73,45 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
-		addressBook.put(fname + " " + lname, contact);
+		Set<String> keyset = addressBook.keySet();
+		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
+		Optional<String> result1 = streamSupplier.get().findAny();
+		if (result1.isEmpty()) {
+			System.out.println("Adding details");
+			addressBook.put(fname + " " + lname, contact);
+		} else {
+			if (streamSupplier.get().anyMatch(x -> x.equals(name))) {
+				System.out.println("There is already a person with this name ");
+			} else {
+				System.out.println("Adding details");
+				addressBook.put(fname + " " + lname, contact);
+			}
+		}
 
 	}
+	/*
+	 * method to search person by place name
+	 */
+	public void search(String place) {
+		Set<Map.Entry<String, Contact>> entries = addressBook.entrySet();
+		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
 
+		Set<String> keySet = addressBook.keySet();
+		Collection<Contact> values = addressBook.values();
+
+		Stream<Contact> valuesStream = values.stream();
+		Stream<String> keysStream = keySet.stream();
+
+		valuesStream.anyMatch((x) -> {
+			if (x.city.equals(place) || x.state.equals(place)) {
+				System.out.println(x.firstName);
+				return true;
+			} else {
+				return false;
+			}
+		});
+
+	}
 	/*
 	 * method to edit contact
 	 */
