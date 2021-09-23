@@ -4,14 +4,45 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class AddressBook {
 	String addressBookName;
 	static Scanner sc = new Scanner(System.in);
+	static Map<String, Contact> addressBook;
 
 	AddressBook(String addressBookName) {
+		this.addressBookName = addressBookName;
+		this.addressBook = new HashMap<>();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addressBookName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AddressBook other = (AddressBook) obj;
+		return Objects.equals(addressBookName, other.addressBookName);
+	}
+
+	public String getAddressBookName() {
+		return addressBookName;
+	}
+
+	public void setAddressBookName(String addressBookName) {
 		this.addressBookName = addressBookName;
 	}
 
@@ -19,7 +50,7 @@ public class AddressBook {
 	 * Map to maintain dictionary name and contact
 	 */
 
-	static Map<String, Contact> addressBook = new HashMap<>();
+	// static Map<String, Contact> addressBook = new HashMap<>();
 
 	/*
 	 * method to add contact
@@ -47,7 +78,20 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
-		addressBook.put(fname + " " + lname, contact);
+		Set<String> keyset = addressBook.keySet();
+		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
+		Optional<String> result1 = streamSupplier.get().findAny();
+		if (result1.isEmpty()) {
+			System.out.println("Adding details");
+			addressBook.put(fname + " " + lname, contact);
+		} else {
+			if (streamSupplier.get().anyMatch(x -> x.equals(name))) {
+				System.out.println("There is already a person with this name ");
+			} else {
+				System.out.println("Adding details");
+				addressBook.put(fname + " " + lname, contact);
+			}
+		}
 
 	}
 
@@ -153,10 +197,8 @@ public class AddressBook {
 	 * method to print conatct
 	 */
 	public void print() {
-
-		for (Contact c : addressBook.values()) {
-			c.display();
-		}
+		for (Map.Entry<String, Contact> entry : addressBook.entrySet())
+			entry.getValue().display();
 
 	}
 
