@@ -1,13 +1,7 @@
 package com.yml.book;
 
-import java.util.ArrayList;
-import java.util.List;
 
-<<<<<<< HEAD:src/com/yml/book/Contacts.java
-public class Contacts {
-=======
 public class Contact {
->>>>>>> uc6:src/com/yml/book/Contact.java
 
 	public String firstName, lastName, address, city, state, zip, phoneNumber, email;
 
