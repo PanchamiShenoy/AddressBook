@@ -3,16 +3,15 @@ package com.yml.book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts {
+public class Contact {
 
 	public String firstName, lastName, address, city, state, zip, phoneNumber, email;
-	List<Contacts> contactList = new ArrayList<>();
 
-	Contacts() {
+	Contact() {
 
 	}
 
-	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
+	public Contact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
